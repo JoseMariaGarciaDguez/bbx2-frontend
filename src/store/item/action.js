@@ -1,4 +1,4 @@
-import { types } from "../item/types"
+import { types } from "./types"
 
 const updateItemList = itemList => {
     return {
@@ -6,5 +6,6 @@ const updateItemList = itemList => {
         payload: itemList
     }
 }
+
 
 export default updateItemList;

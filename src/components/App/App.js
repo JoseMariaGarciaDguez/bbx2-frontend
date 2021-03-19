@@ -14,8 +14,6 @@ function App() {
   if(!token) {
     return <Login setToken={setToken} />
   }*/
-console.log(store)
-
       return (
 
           <Provider store={store}>

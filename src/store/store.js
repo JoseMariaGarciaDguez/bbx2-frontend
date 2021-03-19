@@ -7,7 +7,7 @@ const reducers = combineReducers({
 });
 
 const store = createStore(
-    reducers,{itemReducer:{items:[]}},
+    reducers,{itemReducer:{items:[], detail: {}}},
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 

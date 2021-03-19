@@ -1,5 +1,6 @@
 export const types = {
 
-    items: '[ItemList] ItemList'  
+    items: '[ItemList] ItemList'  ,
+    detail: '[DetailItem] DetailItem'
 
 }

@@ -1,32 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import Moment from 'moment';
 import axios from "axios";
-import {GridCellParams, buildGridCellParams, DataGrid, gridRowCountSelector } from '@material-ui/data-grid';
+import {DataGrid} from '@material-ui/data-grid';
 import updateItemList from '../../store/item/action';
-import ItemModal from '../ItemModal/ItemModal';
 import { useDispatch, useSelector } from 'react-redux'
 import IconButton from '@material-ui/core/IconButton';
 import ItemDetailsDialog from './ItemDetailsDialog';
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from '@material-ui/icons/Delete';
-
-const url = "http://localhost:8080/api/items";
+import detailAdd from '../../store/itemDetails/action';
 
 export default function Dashboard() {
   
   const dispatch = useDispatch();
   const state = useSelector(state => state.itemReducer.items);
-  //const dispatch = useDispatch();
-  const [open, setOpen] = useState(false)
-  const [itemSelected, setItemSelected] = useState();
+  const [open, setOpen] = useState()
+  const [itemSelected, setItemSelected] = useState({});
 
-  const rowClick = (params) => { 
-    setItemSelected(state.filter (e=> e.id == params.row.id)[0]);
+  const rowClick = (params) => {
+    dispatch(detailAdd(params.row));
+    setItemSelected(params.row)
     setOpen(true);
   }
   const deleteItem = (params) =>{
-    dispatch(updateItemList(state.filter (e=> e.id != params.row.id)))
-    
+    dispatch(updateItemList(state.filter (e=> e.id !== params.row.id)))
   }
   
   const getRowsAxios = async () => { return axios({
@@ -55,6 +52,7 @@ export default function Dashboard() {
   }
   useEffect(() => {
     getRowsAxios();
+    
   }, []);
 
   
@@ -87,7 +85,7 @@ const columns = [
     <div style={{ height: 400, width: '100%' }}>
     <h1>Item List:</h1>
     <DataGrid rows={state} columns={columns} pageSize={5} /*onRowClick=/*{(e)=>{getItemAxios(e.row.id)}}*//>
-    <ItemDetailsDialog openState={open} setOpenState={setOpen} item={itemSelected} setItemSelected={setItemSelected} />
+    <ItemDetailsDialog openState={open} setOpenState={setOpen} /*itemSelected={itemSelected} setItemSelected={setItemSelected}*/  />
   </div>
 
   );
